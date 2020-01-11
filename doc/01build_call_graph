@@ -1,0 +1,2 @@
+#!/bin/sh
+dot call_graph.dot -Tpng -o call_graph.png

@@ -127,17 +127,7 @@ over:
 			goto ret;
 		  case 't':
 		  case 'T':
-			Running = FALSE;
-			mvwaddch(stdscr, My_pos.y, My_pos.x, ' ');
-			My_pos = *rnd_pos();
-			telmsg(1);
-			wrefresh(stdscr);
-			sleep(1);
-			telmsg(0);
-			mvwaddch(stdscr, My_pos.y, My_pos.x, PLAYER);
-			leaveok(stdscr, FALSE);
-			wrefresh(stdscr);
-			flush_in();
+			teleport();
 			goto ret;
 		  case CTRL('L'):
 			wrefresh(stdscr);
@@ -227,4 +217,20 @@ reset_count()
 	Running = FALSE;
 	leaveok(stdscr, FALSE);
 	wrefresh(stdscr);
+}
+
+void
+teleport()
+{
+	Running = FALSE;
+	mvwaddch(stdscr, My_pos.y, My_pos.x, ' ');
+	My_pos = *rnd_pos();
+	telmsg(1);
+	wrefresh(stdscr);
+	sleep(1);
+	telmsg(0);
+	mvwaddch(stdscr, My_pos.y, My_pos.x, PLAYER);
+	leaveok(stdscr, FALSE);
+	wrefresh(stdscr);
+	flush_in();
 }

@@ -98,6 +98,7 @@ extern COORD	Max, Min, My_pos, Robots[], Scrap[];
 
 bool	another(void);
 bool	do_move(int, int);
+void    teleport(void);
 bool	eaten(const COORD *);
 void	flush_in(void);
 void	get_move(void);

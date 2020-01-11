@@ -38,9 +38,6 @@ main(ac, av)
 	int	ac;
 	char	**av;
 {
-	/* Revoke setgid privileges */
-	setregid(getgid(), getgid());
-
 	initscr();
 	signal(SIGINT, quit);
 	cbreak();

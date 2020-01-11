@@ -61,7 +61,7 @@ rnd_pos()
 	do {
 		pos.y = rnd(Y_FIELDSIZE - 1) + 1;
 		pos.x = rnd(X_FIELDSIZE - 1) + 1;
-		refresh();
+		wrefresh(stdscr);
 	} while (Field[pos.y][pos.x] != 0);
 	call++;
 	return &pos;

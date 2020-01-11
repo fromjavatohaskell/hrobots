@@ -45,7 +45,7 @@ move_robots()
 	for (rp = Robots; rp < &Robots[MAXROBOTS]; rp++) {
 		if (rp->y < 0)
 			continue;
-		mvaddch(rp->y, rp->x, ' ');
+		mvwaddch(stdscr, rp->y, rp->x, ' ');
 		Field[rp->y][rp->x]--;
 		rp->y += sign(My_pos.y - rp->y);
 		rp->x += sign(My_pos.x - rp->x);
@@ -70,7 +70,7 @@ move_robots()
 		else if (rp->y == My_pos.y && rp->x == My_pos.x)
 			Dead = TRUE;
 		else if (Field[rp->y][rp->x] > 1) {
-			mvaddch(rp->y, rp->x, HEAP);
+			mvwaddch(stdscr, rp->y, rp->x, HEAP);
 			Scrap[Num_scrap++] = *rp;
 			rp->y = -1;
 			Num_robots--;
@@ -79,7 +79,7 @@ move_robots()
 			add_score(ROB_SCORE);
 		}
 		else {
-			mvaddch(rp->y, rp->x, ROBOT);
+			mvwaddch(stdscr, rp->y, rp->x, ROBOT);
 			if (rp->y < Min.y)
 				Min.y = rp->y;
 			if (rp->x < Min.x)
@@ -100,8 +100,8 @@ add_score(add)
 	int	add;
 {
 	Score += add;
-	move(Y_SCORE, X_SCORE);
-	printw("%d", Score);
+	wmove(stdscr, Y_SCORE, X_SCORE);
+	wprintw(stdscr, "%d", Score);
 }
 
 /*

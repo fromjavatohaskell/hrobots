@@ -34,9 +34,6 @@
 
 int main(int, char **);
 
-//extern const char	*Scorefile;
-extern int	Max_per_uid;
-
 int
 main(ac, av)
 	int	ac;
@@ -48,27 +45,14 @@ main(ac, av)
 	/* Revoke setgid privileges */
 	setregid(getgid(), getgid());
 
-	Num_games = 1;
 	if (ac > 1) {
 		bad_arg = FALSE;
 		for (++av; ac > 1 && *av[0]; av++, ac--)
 			if (av[0][0] == '-')
 				for (sp = &av[0][1]; *sp; sp++)
 					switch (*sp) {
-					  case 'A':
-						Auto_bot = TRUE;
-						break;
 					  case 'a':
 						Start_level = 4;
-						break;
-					  case 'n':
-						Num_games++;
-						break;
-					  case 'j':
-						Jump = TRUE;
-						break;
-					  case 't':
-						Teleport = TRUE;
 						break;
 					  
 					  default:
@@ -87,6 +71,8 @@ main(ac, av)
 	cbreak();
 	noecho();
 	nonl();
+        // TODO
+        // y = getmaxy(stdscr), x = getmaxx(stdscr) 
 	if (LINES != Y_SIZE || COLS != X_SIZE) {
 		if (LINES < Y_SIZE || COLS < X_SIZE) {
 			endwin();
@@ -100,25 +86,15 @@ main(ac, av)
 
         init_rand();
 	do {
-		while (Num_games--) {
-			init_field();
-			for (Level = Start_level; !Dead; Level++) {
-				make_level();
-				play_level();
-				if (Auto_bot)
-					sleep(1);
-			}
-			move(My_pos.y, My_pos.x);
-			printw("AARRrrgghhhh....");
-			refresh();
-			if (Auto_bot)
-				sleep(1);
-			if (Auto_bot)
-				sleep(1);
-			refresh();
+		init_field();
+		for (Level = Start_level; !Dead; Level++) {
+			make_level();
+			play_level();
 		}
-		Num_games = 1;
-	} while (!Auto_bot && another());
+		wmove(stdscr, My_pos.y, My_pos.x);
+		wprintw(stdscr, "AARRrrgghhhh....");
+		wrefresh(stdscr);
+	} while (another());
 	quit(0);
 	/* NOTREACHED */
 	return(0);
@@ -148,10 +124,10 @@ another()
 
 	if (query("Another game?")) {
 		for (y = 1; y <= Y_SIZE; y++) {
-			move(y, 1);
-			clrtoeol();
+			wmove(stdscr, y, 1);
+			wclrtoeol(stdscr);
 		}
-		refresh();
+		wrefresh(stdscr);
 		return TRUE;
 	}
 	return FALSE;

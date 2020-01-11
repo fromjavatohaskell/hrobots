@@ -44,14 +44,15 @@ query(prompt)
 	int	c, retval;
 	int	y, x;
 
-	getyx(stdscr, y, x);
-	move(Y_PROMPT, X_PROMPT);
-	addstr(prompt);
-	clrtoeol();
-	refresh();
+        y = getcury(stdscr);
+        x = getcurx(stdscr);
+	wmove(stdscr, Y_PROMPT, X_PROMPT);
+	waddstr(stdscr, prompt);
+	wclrtoeol(stdscr);
+	wrefresh(stdscr);
 	retval = ((c = getchar()) == 'y' || c == 'Y');
-	move(Y_PROMPT, X_PROMPT);
-	clrtoeol();
-	move(y, x);
+	wmove(stdscr, Y_PROMPT, X_PROMPT);
+	wclrtoeol(stdscr);
+	wmove(stdscr, y, x);
 	return retval;
 }

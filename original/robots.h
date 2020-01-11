@@ -33,13 +33,21 @@
 
 # include	<sys/ttydefaults.h>
 # include	<ctype.h>
-# include	<ncurses.h>
+# include       <stdbool.h>
+#undef TRUE
+#define TRUE    1
+
+#undef FALSE
+#define FALSE   0
+# include       <ncurses.h>
+//# include       "curses.h"
 # include	<err.h>
 # include	<errno.h>
 # include	<fcntl.h>
 # include	<pwd.h>
 # include	<signal.h>
 # include	<stdlib.h>
+# include	<stdio.h>
 # include	<string.h>
 # include	<termios.h>
 # include	<unistd.h>
@@ -82,13 +90,13 @@ typedef struct {
  * global variables
  */
 
-extern bool	Dead, Jump, Running,
-		Teleport, Waiting, Was_bonus, Auto_bot;
+extern bool	Dead, Running,
+		Waiting, Was_bonus;
 
 extern char	Cnt_move, Field[Y_FIELDSIZE][X_FIELDSIZE], Run_ch;
 
 extern int	Count, Level, Num_robots, Num_scrap,
-		Start_level, Wait_bonus, Num_games;
+		Start_level, Wait_bonus;
 
 extern u_int32_t	Score;
 
@@ -100,14 +108,12 @@ extern COORD	Max, Min, My_pos, Robots[], Scrap[];
 
 void	add_score(int);
 bool	another(void);
-char	automove(void);
 int	cmp_sc(const void *, const void *);
 bool	do_move(int, int);
 bool	eaten(const COORD *);
 void	flush_in(void);
 void	get_move(void);
 void	init_field(void);
-bool	jumping(void);
 void	make_level(void);
 void	move_robots(void);
 bool	must_telep(void);

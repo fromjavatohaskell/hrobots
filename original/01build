@@ -2,7 +2,6 @@
 [ ! -d ../build ] && mkdir ../build
 if ls ../build/*.o >/dev/null 2>&1; then rm ../build/*.o; fi 
 [ -f robots ] && rm robots
-gcc -o ../build/auto.o -c -Wall auto.c
 gcc -o ../build/extern.o -c -Wall extern.c
 gcc -o ../build/flush_in.o -c -Wall flush_in.c
 gcc -o ../build/init_field.o -c -Wall init_field.c
@@ -14,7 +13,6 @@ gcc -o ../build/play_level.o -c -Wall play_level.c
 gcc -o ../build/query.o -c -Wall query.c
 gcc -o ../build/rnd_pos.o -c -Wall rnd_pos.c
 gcc -o robots \
- ../build/auto.o \
  ../build/extern.o \
  ../build/flush_in.o \
  ../build/init_field.o \

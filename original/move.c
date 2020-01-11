@@ -47,22 +47,13 @@ get_move()
 		return;
 
 	for (;;) {
-		if (Teleport && must_telep())
-			goto teleport;
 		if (Running)
 			c = Run_ch;
 		else if (Count != 0)
 			c = Cnt_move;
 		else {
 over:
-			if (Auto_bot) {
-				c = automove();
-				if (!Jump) {
-					usleep(10000);
-					refresh();
-				}
-			} else
-				c = getchar();
+			c = getchar();
 			if (isdigit(c)) {
 				Count = (c - '0');
 				while (isdigit(c = getchar()))
@@ -127,7 +118,7 @@ over:
 		  case 'Q':
 			if (query("Really quit?"))
 				quit(0);
-			refresh();
+			wrefresh(stdscr);
 			break;
 		  case 'w':
 		  case 'W':
@@ -136,21 +127,20 @@ over:
 			goto ret;
 		  case 't':
 		  case 'T':
-teleport:
 			Running = FALSE;
-			mvaddch(My_pos.y, My_pos.x, ' ');
+			mvwaddch(stdscr, My_pos.y, My_pos.x, ' ');
 			My_pos = *rnd_pos();
 			telmsg(1);
-			refresh();
+			wrefresh(stdscr);
 			sleep(1);
 			telmsg(0);
-			mvaddch(My_pos.y, My_pos.x, PLAYER);
+			mvwaddch(stdscr, My_pos.y, My_pos.x, PLAYER);
 			leaveok(stdscr, FALSE);
-			refresh();
+			wrefresh(stdscr);
 			flush_in();
 			goto ret;
 		  case CTRL('L'):
-			refresh();
+			wrefresh(stdscr);
 			break;
 		  case EOF:
 			break;
@@ -213,8 +203,8 @@ do_move(dy, dx)
 		if (Running) {
 			Running = FALSE;
 			leaveok(stdscr, FALSE);
-			move(My_pos.y, My_pos.x);
-			refresh();
+			wmove(stdscr, My_pos.y, My_pos.x);
+			wrefresh(stdscr);
 		}
 		else {
 			putchar(CTRL('G'));
@@ -224,11 +214,10 @@ do_move(dy, dx)
 	}
 	else if (dy == 0 && dx == 0)
 		return TRUE;
-	mvaddch(My_pos.y, My_pos.x, ' ');
+	mvwaddch(stdscr, My_pos.y, My_pos.x, ' ');
 	My_pos = newpos;
-	mvaddch(My_pos.y, My_pos.x, PLAYER);
-	if (!jumping())
-		refresh();
+	mvwaddch(stdscr, My_pos.y, My_pos.x, PLAYER);
+	wrefresh(stdscr);
 	return TRUE;
 }
 
@@ -265,15 +254,5 @@ reset_count()
 	Count = 0;
 	Running = FALSE;
 	leaveok(stdscr, FALSE);
-	refresh();
-}
-
-/*
- * jumping:
- *	See if we are jumping, i.e., we should not refresh.
- */
-bool
-jumping()
-{
-	return (Jump && (Count || Running || Waiting));
+	wrefresh(stdscr);
 }

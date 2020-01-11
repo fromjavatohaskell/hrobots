@@ -75,38 +75,38 @@ init_field()
 	Waiting = FALSE;
 	Score = 0;
 
-	erase();
-	move(0, 0);
-	addch('+');
+	werase(stdscr);
+	wmove(stdscr, 0, 0);
+	waddch(stdscr,'+');
 	for (i = 1; i < Y_FIELDSIZE; i++) {
-		move(i, 0);
-		addch('|');
+		wmove(stdscr, i, 0);
+		waddch(stdscr,'|');
 	}
-	move(Y_FIELDSIZE, 0);
-	addch('+');
+	wmove(stdscr, Y_FIELDSIZE, 0);
+	waddch(stdscr,'+');
 	for (i = 1; i < X_FIELDSIZE; i++)
-		addch('-');
-	addch('+');
+		waddch(stdscr,'-');
+	waddch(stdscr,'+');
 	if (first)
-		refresh();
-	move(0, 1);
+		wrefresh(stdscr);
+	wmove(stdscr, 0, 1);
 	for (i = 1; i < X_FIELDSIZE; i++)
-		addch('-');
-	addch('+');
+		waddch(stdscr,'-');
+	waddch(stdscr,'+');
 	for (i = 1; i < Y_FIELDSIZE; i++) {
-		move(i, X_FIELDSIZE);
-		addch('|');
+		wmove(stdscr, i, X_FIELDSIZE);
+		waddch(stdscr,'|');
 	}
 	if (first)
-		refresh();
+		wrefresh(stdscr);
 	for (i = 0; desc[i] != NULL; i++) {
-		move(i, X_FIELDSIZE + 2);
-		addstr(desc[i]);
+		wmove(stdscr, i, X_FIELDSIZE + 2);
+		waddstr(stdscr, desc[i]);
 	}
 	telx = X_FIELDSIZE + 2;
 	tely = i;
 	if (first)
-		refresh();
+		wrefresh(stdscr);
 	first = FALSE;
 }
 
@@ -114,6 +114,6 @@ void
 telmsg(on)
 	int on;
 {
-	move(tely, telx);
-	addstr(on ? "Teleport!" : "         ");
+	wmove(stdscr, tely, telx);
+	waddstr(stdscr, on ? "Teleport!" : "         ");
 }

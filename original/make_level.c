@@ -47,9 +47,9 @@ make_level()
 	for (i = 1; i < Y_FIELDSIZE; i++)
 		for (x = 1; x < X_FIELDSIZE; x++)
 			if (Field[i][x] != 0)
-				mvaddch(i, x, ' ');
+				mvwaddch(stdscr, i, x, ' ');
 	if (My_pos.y > 0)
-		mvaddch(My_pos.y, My_pos.x, ' ');
+		mvwaddch(stdscr, My_pos.y, My_pos.x, ' ');
 
 	Waiting = FALSE;
 	Wait_bonus = 0;
@@ -82,5 +82,5 @@ make_level()
 			Max.x = cp->x;
 	}
 	My_pos = *rnd_pos();
-	refresh();
+	wrefresh(stdscr);
 }

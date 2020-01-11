@@ -61,39 +61,5 @@ play_level()
 			Dead = TRUE;
 		if (!Dead)
 			move_robots();
-		if (Was_bonus) {
-			wmove(stdscr, Y_PROMPT, X_PROMPT);
-			wclrtoeol(stdscr);
-			wmove(stdscr, Y_PROMPT + 1, X_PROMPT);
-			wclrtoeol(stdscr);
-			Was_bonus = FALSE;
-		}
-	}
-
-	/*
-	 * if the player didn't die, add on the possible bonuses
-	 */
-
-	if (!Dead) {
-		Was_bonus = FALSE;
-
-		if (Level == Start_level && Start_level > 1) {
-			wmove(stdscr, Y_PROMPT, X_PROMPT);
-			wprintw(stdscr, "Advance bonus: %d", S_BONUS);
-			wrefresh(stdscr);
-			add_score(S_BONUS);
-			Was_bonus = TRUE;
-		}
-
-		if (Wait_bonus != 0) {
-			if (!Was_bonus)
-				wmove(stdscr, Y_PROMPT, X_PROMPT);
-			else
-				wmove(stdscr, Y_PROMPT + 1, X_PROMPT);
-			wprintw(stdscr, "Wait bonus: %d", Wait_bonus);
-			wrefresh(stdscr);
-			add_score(Wait_bonus);
-			Was_bonus = TRUE;
-		}
 	}
 }

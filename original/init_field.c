@@ -67,13 +67,12 @@ init_field()
 				"*:  junk heap",
 				"@:  you",
 				"",
-				"Score: 0",
+				"",
 				NULL
 	};
 
 	Dead = FALSE;
 	Waiting = FALSE;
-	Score = 0;
 
 	werase(stdscr);
 	wmove(stdscr, 0, 0);

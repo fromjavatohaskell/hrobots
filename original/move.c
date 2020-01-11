@@ -158,34 +158,6 @@ ret:
 }
 
 /*
- * must_telep:
- *	Must I teleport; i.e., is there anywhere I can move without
- * being eaten?
- */
-bool
-must_telep()
-{
-	int		x, y;
-	static COORD	newpos;
-
-	for (y = -1; y <= 1; y++) {
-		newpos.y = My_pos.y + y;
-		if (newpos.y <= 0 || newpos.y >= Y_FIELDSIZE)
-			continue;
-		for (x = -1; x <= 1; x++) {
-			newpos.x = My_pos.x + x;
-			if (newpos.x <= 0 || newpos.x >= X_FIELDSIZE)
-				continue;
-			if (Field[newpos.y][newpos.x] > 0)
-				continue;
-			if (!eaten(&newpos))
-				return FALSE;
-		}
-	}
-	return TRUE;
-}
-
-/*
  * do_move:
  *	Execute a move
  */

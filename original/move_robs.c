@@ -74,9 +74,6 @@ move_robots()
 			Scrap[Num_scrap++] = *rp;
 			rp->y = -1;
 			Num_robots--;
-			if (Waiting)
-				Wait_bonus++;
-			add_score(ROB_SCORE);
 		}
 		else {
 			mvwaddch(stdscr, rp->y, rp->x, ROBOT);
@@ -89,19 +86,6 @@ move_robots()
 			if (rp->x > Max.x)
 				Max.x = rp->x;
 		}
-}
-
-/*
- * add_score:
- *	Add a score to the overall point total
- */
-void
-add_score(add)
-	int	add;
-{
-	Score += add;
-	wmove(stdscr, Y_SCORE, X_SCORE);
-	wprintw(stdscr, "%d", Score);
 }
 
 /*

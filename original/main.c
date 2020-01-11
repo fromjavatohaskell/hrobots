@@ -39,32 +39,8 @@ main(ac, av)
 	int	ac;
 	char	**av;
 {
-	const char	*sp;
-	bool	bad_arg;
-
 	/* Revoke setgid privileges */
 	setregid(getgid(), getgid());
-
-	if (ac > 1) {
-		bad_arg = FALSE;
-		for (++av; ac > 1 && *av[0]; av++, ac--)
-			if (av[0][0] == '-')
-				for (sp = &av[0][1]; *sp; sp++)
-					switch (*sp) {
-					  case 'a':
-						Start_level = 4;
-						break;
-					  
-					  default:
-						fprintf(stderr, "robots: unknown option: %c\n", *sp);
-						bad_arg = TRUE;
-						break;
-					}
-		if (bad_arg) {
-			exit(1);
-			/* NOTREACHED */
-		}
-	}
 
 	initscr();
 	signal(SIGINT, quit);
@@ -87,7 +63,7 @@ main(ac, av)
         init_rand();
 	do {
 		init_field();
-		for (Level = Start_level; !Dead; Level++) {
+		for (Level = 1; !Dead; Level++) {
 			make_level();
 			play_level();
 		}

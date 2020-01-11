@@ -40,7 +40,6 @@
 #undef FALSE
 #define FALSE   0
 # include       <ncurses.h>
-//# include       "curses.h"
 # include	<err.h>
 # include	<errno.h>
 # include	<fcntl.h>
@@ -62,11 +61,6 @@
 # define	X_SIZE		80
 # define	MAXLEVELS	4
 # define	MAXROBOTS	(MAXLEVELS * 10)
-# define	ROB_SCORE	10
-# undef		S_BONUS
-# define	S_BONUS		(60 * ROB_SCORE)
-# define	Y_SCORE		21
-# define	X_SCORE		(X_FIELDSIZE + 9)
 # define	Y_PROMPT	(Y_FIELDSIZE - 1)
 # define	X_PROMPT	(X_FIELDSIZE + 2)
 
@@ -90,15 +84,11 @@ typedef struct {
  * global variables
  */
 
-extern bool	Dead, Running,
-		Waiting, Was_bonus;
+extern bool	Dead, Running, Waiting;
 
 extern char	Cnt_move, Field[Y_FIELDSIZE][X_FIELDSIZE], Run_ch;
 
-extern int	Count, Level, Num_robots, Num_scrap,
-		Start_level, Wait_bonus;
-
-extern u_int32_t	Score;
+extern int	Count, Level, Num_robots, Num_scrap;
 
 extern COORD	Max, Min, My_pos, Robots[], Scrap[];
 
@@ -106,9 +96,7 @@ extern COORD	Max, Min, My_pos, Robots[], Scrap[];
  * functions types
  */
 
-void	add_score(int);
 bool	another(void);
-int	cmp_sc(const void *, const void *);
 bool	do_move(int, int);
 bool	eaten(const COORD *);
 void	flush_in(void);
@@ -116,13 +104,11 @@ void	get_move(void);
 void	init_field(void);
 void	make_level(void);
 void	move_robots(void);
-bool	must_telep(void);
 void	play_level(void);
 int	query(const char *);
 void	quit(int) __attribute__((__noreturn__));
 void	reset_count(void);
 COORD  *rnd_pos(void);
 void    init_rand(void);
-void	score(int);
 int	sign(int);
 void	telmsg(int);

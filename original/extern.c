@@ -36,7 +36,6 @@
 bool	Dead;			/* Player is now dead */
 bool	Running = FALSE;	/* Currently in the middle of a run */
 bool	Waiting;		/* Player is waiting for end */
-bool	Was_bonus = FALSE;	/* Was a bonus last level */
 
 char	Cnt_move;		/* Command which has preceded the count */
 char	Field[Y_FIELDSIZE][X_FIELDSIZE];	/* the playing field itslef */
@@ -46,9 +45,6 @@ int	Count = 0;		/* Command count */
 int	Level;			/* Current level */
 int	Num_robots;		/* Number of robots left */
 int	Num_scrap;		/* Number of scrap heaps */
-u_int32_t	Score;		/* Current score */
-int	Start_level = 1;	/* Level on which to start */
-int	Wait_bonus;		/* bonus for waiting */
 
 COORD	Max;			/* Max area robots take up */
 COORD	Min;			/* Min area robots take up */

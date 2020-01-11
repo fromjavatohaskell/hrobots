@@ -52,7 +52,6 @@ make_level()
 		mvwaddch(stdscr, My_pos.y, My_pos.x, ' ');
 
 	Waiting = FALSE;
-	Wait_bonus = 0;
 	leaveok(stdscr, FALSE);
 	for (cp = Robots; cp < &Robots[MAXROBOTS]; cp++)
 		cp->y = -1;

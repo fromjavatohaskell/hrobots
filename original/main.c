@@ -1,3 +1,5 @@
+// Modified version Copyright (c) 2020 https://github.com/fromjavatohaskell/hrobots
+
 /*	$NetBSD: main.c,v 1.21 2004/11/05 21:30:32 dsl Exp $	*/
 
 /*

@@ -1,3 +1,5 @@
+// Modified version Copyright (c) 2020 https://github.com/fromjavatohaskell/hrobots
+
 /*	$NetBSD: rnd_pos.c,v 1.5 2003/08/07 09:37:37 agc Exp $	*/
 
 /*

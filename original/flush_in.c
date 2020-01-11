@@ -1,3 +1,5 @@
+// Modified version Copyright (c) 2020 https://github.com/fromjavatohaskell/hrobots
+
 /*	$NetBSD: flush_in.c,v 1.6 2003/08/07 09:37:36 agc Exp $	*/
 
 /*

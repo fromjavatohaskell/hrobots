@@ -1,3 +1,5 @@
+// Modified version Copyright (c) 2020 https://github.com/fromjavatohaskell/hrobots
+
 /*	$NetBSD: robots.h,v 1.18 2004/01/27 20:30:30 jsm Exp $	*/
 
 /*

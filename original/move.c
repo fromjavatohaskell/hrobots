@@ -29,8 +29,7 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#include "robots.h"
+# include	"robots.h"
 
 # define	ESC	'\033'
 

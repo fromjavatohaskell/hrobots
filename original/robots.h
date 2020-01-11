@@ -31,14 +31,10 @@
  *	@(#)robots.h	8.1 (Berkeley) 5/31/93
  */
 
+# include	<sys/cdefs.h>
 # include	<sys/ttydefaults.h>
 # include	<ctype.h>
 # include       <stdbool.h>
-#undef TRUE
-#define TRUE    1
-
-#undef FALSE
-#define FALSE   0
 # include       <ncurses.h>
 # include	<err.h>
 # include	<errno.h>

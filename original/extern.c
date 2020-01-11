@@ -29,8 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
 # include	"robots.h"
 
 bool	Dead;			/* Player is now dead */

@@ -44,7 +44,6 @@ rnd(range)
   int32_t result; 
   random_r(&data, &result);
   return result % range;
-//      return rand() % range;
 }
 
 
@@ -68,10 +67,9 @@ rnd_pos()
 }
 
 void init_rand() {
-        //srand(getpid());
-        //srand(10000);
-  int seed = 10000;
-//  int seed = getpid();
+  int seed = getpid();
+  // uncomment next line to have deterministic start state
+//  seed = 10000;
   initstate_r((int) 1,statebuf,BUFSIZE,&data);
   srandom_r(seed,&data);
 }

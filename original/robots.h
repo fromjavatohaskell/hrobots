@@ -31,15 +31,9 @@
  *	@(#)robots.h	8.1 (Berkeley) 5/31/93
  */
 
-# include	<sys/cdefs.h>
-# include	<sys/ttydefaults.h>
 # include	<ctype.h>
 # include       <stdbool.h>
 # include       <ncurses.h>
-# include	<err.h>
-# include	<errno.h>
-# include	<fcntl.h>
-# include	<pwd.h>
 # include	<signal.h>
 # include	<stdlib.h>
 # include	<stdio.h>

@@ -30,13 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)move_robs.c	8.1 (Berkeley) 5/31/93";
-#else
-__RCSID("$NetBSD: move_robs.c,v 1.7 2003/08/07 09:37:37 agc Exp $");
-#endif
-#endif /* not lint */
 
 # include	"robots.h"
 
@@ -45,19 +38,10 @@ __RCSID("$NetBSD: move_robs.c,v 1.7 2003/08/07 09:37:37 agc Exp $");
  *	Move the robots around
  */
 void
-move_robots(was_sig)
-	int	was_sig;
+move_robots()
 {
 	COORD		*rp;
 
-	if (Real_time)
-		signal(SIGALRM, move_robots);
-# ifdef DEBUG
-	move(Min.y, Min.x);
-	addch(inch());
-	move(Max.y, Max.x);
-	addch(inch());
-# endif /* DEBUG */
 	for (rp = Robots; rp < &Robots[MAXROBOTS]; rp++) {
 		if (rp->y < 0)
 			continue;
@@ -105,23 +89,6 @@ move_robots(was_sig)
 			if (rp->x > Max.x)
 				Max.x = rp->x;
 		}
-
-	if (was_sig) {
-		refresh();
-		if (Dead || Num_robots <= 0)
-			longjmp(End_move, 0);
-	}
-
-# ifdef DEBUG
-	standout();
-	move(Min.y, Min.x);
-	addch(inch());
-	move(Max.y, Max.x);
-	addch(inch());
-	standend();
-# endif /* DEBUG */
-	if (Real_time)
-		alarm(3);
 }
 
 /*

@@ -30,24 +30,11 @@
  */
 
 #include <sys/cdefs.h>
-#ifndef lint
-__COPYRIGHT("@(#) Copyright (c) 1980, 1993\n\
-	The Regents of the University of California.  All rights reserved.\n");
-#endif /* not lint */
-
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 5/31/93";
-#else
-__RCSID("$NetBSD: main.c,v 1.21 2004/11/05 21:30:32 dsl Exp $");
-#endif
-#endif /* not lint */
-
 # include	"robots.h"
 
 int main(int, char **);
 
-extern const char	*Scorefile;
+//extern const char	*Scorefile;
 extern int	Max_per_uid;
 
 int
@@ -57,57 +44,19 @@ main(ac, av)
 {
 	const char	*sp;
 	bool	bad_arg;
-	bool	show_only;
-	int		score_wfd; /* high score writable file descriptor */
-	int		score_err = 0; /* hold errno from score file open */
-
-	score_wfd = open(Scorefile, O_RDWR);
-	if (score_wfd < 0)
-		score_err = errno;
-	else if (score_wfd < 3)
-		exit(1);
 
 	/* Revoke setgid privileges */
 	setregid(getgid(), getgid());
 
-	show_only = FALSE;
 	Num_games = 1;
 	if (ac > 1) {
 		bad_arg = FALSE;
 		for (++av; ac > 1 && *av[0]; av++, ac--)
-			if (av[0][0] != '-')
-				if (isdigit((unsigned char)av[0][0]))
-					Max_per_uid = atoi(av[0]);
-				else {
-					Scorefile = av[0];
-					if (score_wfd >= 0)
-						close(score_wfd);
-					score_wfd = open(Scorefile, O_RDWR);
-					if (score_wfd < 0)
-						score_err = errno;
-# ifdef	FANCY
-					sp = strrchr(Scorefile, '/');
-					if (sp == NULL)
-						sp = Scorefile;
-					if (strcmp(sp, "pattern_roll") == 0)
-						Pattern_roll = TRUE;
-					else if (strcmp(sp, "stand_still") == 0)
-						Stand_still = TRUE;
-					if (Pattern_roll || Stand_still)
-						Teleport = TRUE;
-# endif
-				}
-			else
+			if (av[0][0] == '-')
 				for (sp = &av[0][1]; *sp; sp++)
 					switch (*sp) {
 					  case 'A':
 						Auto_bot = TRUE;
-						break;
-					  case 's':
-						show_only = TRUE;
-						break;
-					  case 'r':
-						Real_time = TRUE;
 						break;
 					  case 'a':
 						Start_level = 4;
@@ -133,19 +82,6 @@ main(ac, av)
 		}
 	}
 
-	if (show_only) {
-		show_score();
-		exit(0);
-		/* NOTREACHED */
-	}
-
-	if (score_wfd < 0) {
-		errno = score_err;
-		warn("%s", Scorefile);
-		warnx("High scores will not be recorded!");
-		sleep(2);
-	}
-
 	initscr();
 	signal(SIGINT, quit);
 	cbreak();
@@ -162,9 +98,7 @@ main(ac, av)
 		stdscr = newwin(Y_SIZE, X_SIZE, 0, 0);
 	}
 
-	srand(getpid());
-	if (Real_time)
-		signal(SIGALRM, move_robots);
+        init_rand();
 	do {
 		while (Num_games--) {
 			init_field();
@@ -179,7 +113,6 @@ main(ac, av)
 			refresh();
 			if (Auto_bot)
 				sleep(1);
-			score(score_wfd);
 			if (Auto_bot)
 				sleep(1);
 			refresh();
@@ -213,19 +146,12 @@ another()
 {
 	int	y;
 
-#ifdef	FANCY
-	if ((Stand_still || Pattern_roll) && !Newscore)
-		return TRUE;
-#endif
-
 	if (query("Another game?")) {
-		if (Full_clear) {
-			for (y = 1; y <= Num_scores; y++) {
-				move(y, 1);
-				clrtoeol();
-			}
-			refresh();
+		for (y = 1; y <= Y_SIZE; y++) {
+			move(y, 1);
+			clrtoeol();
 		}
+		refresh();
 		return TRUE;
 	}
 	return FALSE;

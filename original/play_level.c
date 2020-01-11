@@ -30,13 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)play_level.c	8.1 (Berkeley) 5/31/93";
-#else
-__RCSID("$NetBSD: play_level.c,v 1.6 2003/08/07 09:37:37 agc Exp $");
-#endif
-#endif /* not lint */
 
 # include	"robots.h"
 
@@ -59,27 +52,16 @@ play_level()
 		addch(ROBOT);
 	}
 	refresh();
-# ifdef DEBUG
-	standout();
-	move(Min.y, Min.x);
-	addch(inch());
-	move(Max.y, Max.x);
-	addch(inch());
-	standend();
-# endif /* DEBUG */
-	setjmp(End_move);
 	flush_in();
 	while (!Dead && Num_robots > 0) {
 		move(My_pos.y, My_pos.x);
 		if (!jumping())
 			refresh();
 		get_move();
-		if (Real_time)
-			alarm(0);
 		if (Field[My_pos.y][My_pos.x] != 0)
 			Dead = TRUE;
 		if (!Dead)
-			move_robots(FALSE);
+			move_robots();
 		if (Was_bonus) {
 			move(Y_PROMPT, X_PROMPT);
 			clrtoeol();

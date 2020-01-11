@@ -30,14 +30,6 @@
  */
 
 #include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)move.c	8.1 (Berkeley) 5/31/93";
-#else
-__RCSID("$NetBSD: move.c,v 1.12 2004/08/27 09:07:08 christos Exp $");
-#endif
-#endif /* not lint */
-
 #include "robots.h"
 
 # define	ESC	'\033'
@@ -50,22 +42,10 @@ void
 get_move()
 {
 	int		c;
-#ifdef FANCY
-	int		lastmove;
-#endif /*FANCY*/
 
 	if (Waiting)
 		return;
 
-#ifdef	FANCY
-	if (Pattern_roll) {
-		if (Next_move >= Move_list)
-			lastmove = *Next_move;
-		else
-			lastmove = -1;	/* flag for "first time in" */
-	} else
-		lastmove = 0; /* Shut up gcc */
-#endif
 	for (;;) {
 		if (Teleport && must_telep())
 			goto teleport;
@@ -73,21 +53,6 @@ get_move()
 			c = Run_ch;
 		else if (Count != 0)
 			c = Cnt_move;
-#ifdef	FANCY
-		else if (Num_robots > 1 && Stand_still)
-			c = '>';
-		else if (Num_robots > 1 && Pattern_roll) {
-			if (*++Next_move == '\0') {
-				if (lastmove < 0)
-					goto over;
-				Next_move = Move_list;
-			}
-			c = *Next_move;
-			mvaddch(0, 0, c);
-			if (c == lastmove)
-				goto over;
-		}
-#endif
 		else {
 over:
 			if (Auto_bot) {
@@ -212,11 +177,6 @@ must_telep()
 {
 	int		x, y;
 	static COORD	newpos;
-
-#ifdef	FANCY
-	if (Stand_still && Num_robots > 1 && eaten(&My_pos))
-		return TRUE;
-#endif
 
 	for (y = -1; y <= 1; y++) {
 		newpos.y = My_pos.y + y;

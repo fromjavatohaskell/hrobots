@@ -30,17 +30,23 @@
  */
 
 #include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)rnd_pos.c	8.1 (Berkeley) 5/31/93";
-#else
-__RCSID("$NetBSD: rnd_pos.c,v 1.5 2003/08/07 09:37:37 agc Exp $");
-#endif
-#endif /* not lint */
 
 # include	"robots.h"
 
-# define	IS_SAME(p,y,x)	((p).y != -1 && (p).y == y && (p).x == x)
+#define BUFSIZE 128
+static struct random_data data;
+static char statebuf[BUFSIZE];
+
+int
+rnd(range)
+        int     range;
+{
+  int32_t result; 
+  random_r(&data, &result);
+  return result % range;
+//      return rand() % range;
+}
+
 
 /*
  * rnd_pos:
@@ -61,10 +67,11 @@ rnd_pos()
 	return &pos;
 }
 
-int
-rnd(range)
-	int	range;
-{
-
-	return rand() % range;
+void init_rand() {
+        //srand(getpid());
+        //srand(10000);
+  int seed = 10000;
+//  int seed = getpid();
+  initstate_r((int) 1,statebuf,BUFSIZE,&data);
+  srandom_r(seed,&data);
 }

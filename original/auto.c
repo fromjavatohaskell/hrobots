@@ -63,8 +63,6 @@
 #define MIN(a,b) (((a)>(b))?(b):(a))
 #define MAX(a,b) (((a)<(b))?(b):(a))
 
-#define CONSDEBUG(a)
-
 static int distance(int, int, int, int);
 static int xinc(int);
 static int yinc(int);
@@ -286,7 +284,6 @@ move_between(rob, hp)
 		 */
 		dx = - sign(My_pos.x - hp->x);
 		dy = sign(My_pos.y - rob->y);
-		CONSDEBUG(("aligned in x"));
 	}
 	else if (My_pos.y == rob->y) {
 		/*
@@ -296,10 +293,8 @@ move_between(rob, hp)
 		 */
 		dx = sign(My_pos.x - rob->x);
 		dy = -sign(My_pos.y - hp->y);
-		CONSDEBUG(("aligned in y"));
 	}
 	else {
-		CONSDEBUG(("no aligned"));
 		slope = (My_pos.y - rob->y) / (My_pos.x - rob->x);
 		cons = slope * rob->y;
 		if (ABS(My_pos.x - rob->x) > ABS(My_pos.y - rob->y)) {
@@ -318,8 +313,6 @@ move_between(rob, hp)
 			dy = sign(My_pos.y - rob->y);
 		}
 	}
-	CONSDEBUG(("me (%d,%d) robot(%d,%d) heap(%d,%d) delta(%d,%d)",
-		My_pos.x, My_pos.y, rob->x, rob->y, hp->x, hp->y, dx, dy));
 	return move_towards(dx, dy);
 } /* end move_between */
 		
@@ -357,9 +350,6 @@ between(rob, hp)
 char
 automove() 
 {
-#if 0
-	return  find_moves()[0];
-#else
 	COORD *robot_close;
 	COORD *heap_close;
 	int robot_dist, robot_heap, heap_dist;
@@ -382,5 +372,4 @@ automove()
 	}
 	
 	return move_between(robot_close, heap_close);
-#endif
 } /* end automove */

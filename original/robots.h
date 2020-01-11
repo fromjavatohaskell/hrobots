@@ -32,14 +32,12 @@
  */
 
 # include	<sys/ttydefaults.h>
-# include	<sys/endian.h>
 # include	<ctype.h>
-# include	<curses.h>
+# include	<ncurses.h>
 # include	<err.h>
 # include	<errno.h>
 # include	<fcntl.h>
 # include	<pwd.h>
-# include	<setjmp.h>
 # include	<signal.h>
 # include	<stdlib.h>
 # include	<string.h>
@@ -63,9 +61,6 @@
 # define	X_SCORE		(X_FIELDSIZE + 9)
 # define	Y_PROMPT	(Y_FIELDSIZE - 1)
 # define	X_PROMPT	(X_FIELDSIZE + 2)
-# define	MAXSCORES	(Y_SIZE - 2)
-# define	MAXNAME		16
-# define	MS_NAME		"Ten"
 
 /*
  * characters on screen
@@ -83,38 +78,21 @@ typedef struct {
 	int	y, x;
 } COORD;
 
-typedef struct {
-	u_int32_t	s_uid;
-	u_int32_t	s_score;
-	u_int32_t	s_auto;
-	u_int32_t	s_level;
-	char		s_name[MAXNAME];
-} SCORE;
-
-typedef struct passwd	PASSWD;
-
 /*
  * global variables
  */
 
-extern bool	Dead, Full_clear, Jump, Newscore, Real_time, Running,
+extern bool	Dead, Jump, Running,
 		Teleport, Waiting, Was_bonus, Auto_bot;
 
-#ifdef	FANCY
-extern bool	Pattern_roll, Stand_still;
-#endif
-
 extern char	Cnt_move, Field[Y_FIELDSIZE][X_FIELDSIZE], Run_ch;
-extern const char *Next_move, *Move_list;
 
-extern int	Count, Level, Num_robots, Num_scrap, Num_scores,
+extern int	Count, Level, Num_robots, Num_scrap,
 		Start_level, Wait_bonus, Num_games;
 
 extern u_int32_t	Score;
 
 extern COORD	Max, Min, My_pos, Robots[], Scrap[];
-
-extern jmp_buf	End_move;
 
 /*
  * functions types
@@ -131,16 +109,14 @@ void	get_move(void);
 void	init_field(void);
 bool	jumping(void);
 void	make_level(void);
-void	move_robots(int);
+void	move_robots(void);
 bool	must_telep(void);
 void	play_level(void);
 int	query(const char *);
 void	quit(int) __attribute__((__noreturn__));
 void	reset_count(void);
-int	rnd(int);
 COORD  *rnd_pos(void);
+void    init_rand(void);
 void	score(int);
-void	set_name(SCORE *);
-void	show_score(void);
 int	sign(int);
 void	telmsg(int);

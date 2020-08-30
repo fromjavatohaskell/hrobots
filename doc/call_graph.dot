@@ -1,83 +1,30 @@
 digraph G {
-//flush_in -> tcflush
-//init_field -> werase
-//init_field -> wmove
-//init_field -> waddch
-//init_field -> wrefresh
-//init_field -> waddstr
-//telmsg -> wmove
-//telmsg -> waddstr
-//main -> initscr
-//main -> signal
-//main -> cbreak
-//main -> noecho
-//main -> nonl
-//main -> endwin
-main -> exit
-//main -> delwin
-//main -> newwin
-main -> init_rand
-main -> init_field
-main -> make_level
-main -> play_level
-//main -> wmove
-//main -> wprintw
-//main -> wrefresh
-main -> another
-main -> quit
-//quit -> endwin
-quit -> exit
-another -> query
-//another -> wmove
-//another -> wclrtoeol
-//another -> wrefresh
-//make_level -> reset_count
-//make_level -> mvwaddch
-//make_level -> leaveok
-//make_level -> wrefresh
-make_level -> rnd_pos
-//get_move -> getchar
-//get_move -> leaveok
-get_move -> do_move
-get_move -> quit
-//get_move -> wrefresh
-get_move -> teleport
-//get_move -> reset_count
-//do_move -> leaveok
-//do_move -> wmove
-//do_move -> wrefresh
-//do_move -> reset_count
-//do_move -> mvwaddch
-do_move -> eaten
-//reset_count -> leaveok
-//reset_count -> wrefresh
-//teleport -> mvwaddch
-teleport -> rnd_pos
-teleport -> telmsg
-//teleport -> wrefresh
-//teleport -> leaveok
-//teleport -> flush_in
-//move_robots -> mvwaddch
-//play_level -> wmove
-//play_level -> waddch
-//play_level -> wrefresh
-//play_level -> flush_in
-play_level -> get_move
-play_level -> move_robots
-//query -> getcury
-//query -> getcurx
-//query -> wmove
-//query -> waddstr
-//query -> wclrtoeol
-//query -> wrefresh
-//query -> wmove
-//query -> wclrtoeol
-//query -> getchar
-//query -> wmove
-//rnd -> random_r
-rnd_pos -> rnd
-//rnd_pos -> wrefresh
-//init_rand -> getpid
-//init_rand -> initstate_r
-//init_rand -> srandom_r
+
+  main [shape=box, label="main\n\n->quit\n->exit"]
+  init_rand [shape=box]
+  init_field [shape=box]
+  make_level [shape=box, label="make_level\n\n->rnd_pos"]
+  play_level [shape=box]
+  another [shape=box]
+  get_move [shape=box]
+  move_robots [shape=box]
+  query [shape=box]
+  do_move [shape=box]
+  teleport [shape=box, label="teleport\n\n->rnd_pos"]
+  get_move [shape=box, label="get_move\n\n->quit"]
+  telmsg [shape=box]
+  eaten [shape=box]
+
+  main -> init_rand
+  main -> init_field
+  main -> make_level
+  main -> play_level
+  main -> another
+  another -> query
+  get_move -> do_move
+  get_move -> teleport
+  do_move -> eaten
+  teleport -> telmsg
+  play_level -> get_move
+  play_level -> move_robots
 }

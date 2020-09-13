@@ -2,17 +2,17 @@
 [ ! -d ../build ] && mkdir ../build
 if ls ../build/*.o >/dev/null 2>&1; then rm ../build/*.o; fi 
 [ -f robots ] && rm robots
-gcc -o ../build/extern.o -c -Wall extern.c
-gcc -o ../build/flush_in.o -c -Wall flush_in.c
-gcc -o ../build/init_field.o -c -Wall init_field.c
-gcc -o ../build/main.o -c -Wall main.c
-gcc -o ../build/make_level.o -c -Wall make_level.c
-gcc -o ../build/move.o -c -Wall move.c
-gcc -o ../build/move_robs.o -c -Wall move_robs.c
-gcc -o ../build/play_level.o -c -Wall play_level.c
-gcc -o ../build/query.o -c -Wall query.c
-gcc -o ../build/rnd_pos.o -c -Wall rnd_pos.c
-gcc -o robots \
+gcc -g -o ../build/extern.o -c -Wall extern.c
+gcc -g -o ../build/flush_in.o -c -Wall flush_in.c
+gcc -g -o ../build/init_field.o -c -Wall init_field.c
+gcc -g -o ../build/main.o -c -Wall main.c
+gcc -g -o ../build/make_level.o -c -Wall make_level.c
+gcc -g -o ../build/move.o -c -Wall move.c
+gcc -g -o ../build/move_robs.o -c -Wall move_robs.c
+gcc -g -o ../build/play_level.o -c -Wall play_level.c
+gcc -g -o ../build/query.o -c -Wall query.c
+gcc -g -o ../build/rnd_pos.o -c -Wall rnd_pos.c
+gcc -g -o robots \
  ../build/extern.o \
  ../build/flush_in.o \
  ../build/init_field.o \

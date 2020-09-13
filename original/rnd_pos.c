@@ -68,6 +68,6 @@ void init_rand() {
   int seed = getpid();
   // uncomment next line to have deterministic start state
 //  seed = 10000;
-  initstate_r((int) 1,statebuf,BUFSIZE,&data);
-  srandom_r(seed,&data);
+  initstate_r((int) seed,statebuf,BUFSIZE,&data);
+//  srandom_r(seed,&data);
 }
